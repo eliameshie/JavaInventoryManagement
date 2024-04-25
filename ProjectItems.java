@@ -12,8 +12,9 @@ public class ProjectItems implements Item {
     private String name;
     private int quantity;
     private double price;
+   // private double price;
     
-    public ProjectItems(String name, int quantity, double price){
+    public ProjectItems(String name, int quantity,double price){
         this.name=name;
         this.quantity=quantity;
         this.price=price;
@@ -47,6 +48,6 @@ public class ProjectItems implements Item {
     }
     @Override
     public String toString() {
-        return  name + " |Quantity: " + quantity+"Price:"+price;
+        return  name + " |Quantity: " + quantity+price;
     }
 }

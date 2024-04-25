@@ -18,8 +18,6 @@ public interface Item {
    
     @Override
     String toString();
-    @Override
-    String toWord();
     
     
 }
