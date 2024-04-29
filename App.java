@@ -1,5 +1,7 @@
 package application;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +44,14 @@ public class App extends Application {
             }
         });
         Button delBtn = new Button("Delete");
-        
-        // spicing it up
-        Button calcTotalBtn = new Button("Calculate subtotal");
-        calcTotalBtn.setOnAction(e -> calculateTotal());
+        Button xmlBtn = new Button("Calculate total");
        
         delBtn.setOnAction(e -> delItem());
+        xmlBtn.setOnAction(e -> generateXML());
         
         totalField.setEditable(false);
      
-        VBox root = new VBox(10, nameField, quantityField, priceField, addBtn, delBtn, calcTotalBtn, listView);
+        VBox root = new VBox(10, nameField, quantityField, priceField, addBtn, delBtn, xmlBtn, listView);
         Scene scene = new Scene(root, 400, 400);
         stage.setScene(scene);
         stage.setTitle("Inventory Management System");
@@ -77,23 +77,38 @@ public class App extends Application {
         listView.getItems().addAll(items);
     }
     
-    private void calculateTotal() {
-    	double total = 0.0;
-        for (ProjectItems item : items) {
-            if (listView.getSelectionModel().getSelectedItem() != null) {
-                double price = item.getPrice();
-                int quantity = item.getQuantity();
-                System.out.println("Price: " + price + ", Quantity: " + quantity);
-                // this is a bug right now
-                total += price * quantity;
+    private void generateXML() {
+    	try {
+    		   // Calculate total price and count total number of items
+            double totalPrice = 0.0;
+            int totalItems = items.size();
+            for (ProjectItems item : items) {
+                totalPrice += item.getPrice() * item.getQuantity();
             }
-        }
-        System.out.println("Total: " + total);
-        totalField.setText("Total value of selected items: $" + total);
-        
-        // Check if totalField is already added to the VBox
-        if (totalField.getParent() == null) {
-            ((VBox) listView.getParent()).getChildren().add(totalField);
+
+            // Construct XML content
+            StringBuilder xmlContent = new StringBuilder();
+            xmlContent.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            xmlContent.append("<result>\n");
+            xmlContent.append("\t<totalItems>").append(totalItems).append("</totalItems>\n");
+            xmlContent.append("\t<totalPrice>").append(totalPrice).append("</totalPrice>\n");
+            xmlContent.append("</result>");
+
+            // Write XML content to file
+            File xmlFile = new File("D:\\Users\\strid\\eclipse-workspace\\PLEAAASE\\result.xml");
+            FileWriter writer = new FileWriter(xmlFile);
+            writer.write(xmlContent.toString());
+            writer.close();
+
+            System.out.println("XML generated and saved to " + xmlFile.getAbsolutePath());
+            
+            // Display total price on the VBox
+            totalField.setText("Total price of all items: $" + totalPrice);
+            if (totalField.getParent() == null) {
+                ((VBox) listView.getParent()).getChildren().add(totalField);
+            }
+        } catch (IOException ex) {
+            System.err.println("Error generating XML: " + ex.getMessage());
         }
 
     }
