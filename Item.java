@@ -1,25 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
-package com.mycompany.cis434project;
+package application;
 
-/**
- *
- * @author antho
- */
-public interface Item {
-    String getName();
-    int getQuanity();
-    double getPrice();
-    void setName(String name);
-    void setQuanity(int quantity);
-    void setPrice(double price);
-   
-    @Override
-    String toString();
-    @Override
-    String toWord();
-    
-    
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class Item {
+	
+	// price and image name
+	private String food;
+	private float price;
+	
+	// constructor
+	public Item(String food, float price) {
+		this.food = food;
+		this.price = price;
+	}
+	
+	public String getFood() {
+		return food;
+	}
+	
+	public float getPrice() {
+		return price;
+	}
+	
 }

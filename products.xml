@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product>
+	<item>>
+		<food>apple</food>
+		<price>>0.50</price>
+	</item>
+	<item>>
+		<food>milk</food>
+		<price>>3.00</price>
+	</item>
+	<item>>
+		<food>eggs</food>
+		<price>>7.00</price>
+	</item>
+	<item>>
+		<food>lettuce</food>
+		<price>>1.00</price>
+	</item>
+</product>
